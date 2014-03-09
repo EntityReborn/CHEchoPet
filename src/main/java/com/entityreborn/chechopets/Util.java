@@ -41,8 +41,8 @@ import org.bukkit.entity.Player;
 public class Util {
     public static Pet getPet(Construct pname, Target t) {
         MCPlayer player = Static.GetPlayer(pname, t);
-
-        return EchoPetAPI.getAPI().getPet((Player) player.getHandle());
+        
+        return getPet(player, t);
     }
     
     public static Pet getPet(MCPlayer p, Target t) {
