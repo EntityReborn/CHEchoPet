@@ -135,11 +135,26 @@ public class Functions {
             
             return arr;
         }
+        
         public Construct exec2(Target t, Environment environment, Construct... args) throws ConfigRuntimeException {
             MCPlayer player = environment.getEnv(CommandHelperEnvironment.class).GetPlayer();
 
             if (args.length != 0) {
-                player = Static.GetPlayer(args[0], t);
+                if (args[0] instanceof CInt) {
+                    int id = Static.getInt32(args[0], t);
+
+                    for (Pet pet : EchoPetAPI.getAPI().getAllPets()) {
+                        if (pet.getCraftPet().getEntityId() == id) {
+                            return getPetArray(pet, t);
+                        }
+                    }
+                    
+                    throw new ConfigRuntimeException("No pet with that id found,"
+                            + " or entity id is not from a pet!", 
+                            Exceptions.ExceptionType.BadEntityException, t);
+                } else {
+                    player = Static.GetPlayer(args[0], t);
+                }
             }
             
             Pet pet = Util.getPet(player, t);
