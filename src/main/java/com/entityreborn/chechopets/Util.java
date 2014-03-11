@@ -56,4 +56,14 @@ public class Util {
         
         return pet;
     }
+    
+    public static Pet getPet(int id, Target t) {
+        for (Pet pet : EchoPetAPI.getAPI().getAllPets()) {
+            if (pet.getCraftPet().getEntityId() == id) {
+                return pet;
+            }
+        }
+        
+        return null;
+    }
 }
