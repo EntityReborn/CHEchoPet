@@ -34,8 +34,8 @@ import com.laytonsmith.core.Static;
 import com.laytonsmith.core.constructs.CArray;
 import com.laytonsmith.core.constructs.CBoolean;
 import com.laytonsmith.core.constructs.CInt;
+import com.laytonsmith.core.constructs.CNull;
 import com.laytonsmith.core.constructs.CString;
-import com.laytonsmith.core.constructs.CVoid;
 import com.laytonsmith.core.constructs.Construct;
 import com.laytonsmith.core.constructs.Target;
 import com.laytonsmith.core.environments.CommandHelperEnvironment;
@@ -215,7 +215,7 @@ public class Functions {
 
             EchoPetAPI.getAPI().removePet((Player) player.getHandle(), sendmessage, true);
 
-            return new CVoid(t);
+            return CNull.NULL;
         }
 
         public Integer[] numArgs() {
@@ -255,7 +255,7 @@ public class Functions {
             Pet pet = Util.getPet(player, t);
             EchoPetAPI.getAPI().teleportPet(pet, (Location) location.getHandle());
 
-            return new CVoid(t);
+            return CNull.NULL;
         }
 
         public Integer[] numArgs() {
@@ -292,7 +292,7 @@ public class Functions {
             Pet pet = Util.getPet(player, t);
             pet.ownerRidePet(riding);
 
-            return new CVoid(t);
+            return CNull.NULL;
         }
 
         public Integer[] numArgs() {
@@ -324,7 +324,7 @@ public class Functions {
             
             EchoPetAPI.getAPI().openPetDataMenu((Player)player.getHandle(), message);
 
-            return new CVoid(t);
+            return CNull.NULL;
         }
 
         public Integer[] numArgs() {
@@ -356,7 +356,7 @@ public class Functions {
             
             EchoPetAPI.getAPI().openPetSelector((Player)player.getHandle(), message);
 
-            return new CVoid(t);
+            return CNull.NULL;
         }
 
         public Integer[] numArgs() {
