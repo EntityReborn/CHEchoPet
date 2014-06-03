@@ -31,7 +31,7 @@ import com.laytonsmith.core.constructs.Target;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.Exceptions;
 import io.github.dsh105.echopet.api.EchoPetAPI;
-import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.entity.Player;
 
 /**

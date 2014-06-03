@@ -44,9 +44,9 @@ import com.laytonsmith.core.events.EventUtils;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.exceptions.EventException;
 import com.laytonsmith.core.exceptions.PrefilterNonMatchException;
+import io.github.dsh105.echopet.api.entity.pet.Pet;
 import io.github.dsh105.echopet.api.event.PetInteractEvent;
-import io.github.dsh105.echopet.entity.CraftPet;
-import io.github.dsh105.echopet.entity.Pet;
+import io.github.dsh105.echopet.nms.v1_7_R2.entity.CraftPet;
 import java.util.Map;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -223,7 +223,7 @@ public class Events implements Listener {
                 map.put("owner", new CString(pet.getNameOfOwner(), Target.UNKNOWN));
                 map.put("cause", new CString(damage.getCause().name(), Target.UNKNOWN));
                 map.put("amount", new CDouble(damage.getDamage(), Target.UNKNOWN));
-                map.put("wassecondpet", new CBoolean(pet.isRider(), Target.UNKNOWN));
+                map.put("wassecondpet", CBoolean.get(pet.isRider()));
 
                 if (damage instanceof EntityDamageByEntityEvent) {
                     Entity damager = ((EntityDamageByEntityEvent) damage).getDamager();
@@ -272,6 +272,10 @@ public class Events implements Listener {
 
         public Version since() {
             return CHVersion.V3_3_1;
+        }
+
+        public BindableEvent convert(CArray carray, Target target) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
 
@@ -324,6 +328,10 @@ public class Events implements Listener {
         public Version since() {
             return CHVersion.V3_3_1;
         }
+
+        public BindableEvent convert(CArray carray, Target target) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
     
     @api
@@ -341,7 +349,7 @@ public class Events implements Listener {
             return true;
         }
 
-        public BindableEvent convert(CArray manualObject) {
+        public BindableEvent convert(CArray manualObject, Target t ) {
             return null;
         }
 
@@ -372,6 +380,11 @@ public class Events implements Listener {
         public Version since() {
             return CHVersion.V3_3_1;
         }
+        /*
+        public BindableEvent convert(CArray carray, Target target) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        */
     }
     
     @api
@@ -419,6 +432,10 @@ public class Events implements Listener {
 
         public Version since() {
             return CHVersion.V3_3_1;
+        }
+
+        public BindableEvent convert(CArray carray, Target target) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
 }

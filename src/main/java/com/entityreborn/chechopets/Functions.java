@@ -44,8 +44,8 @@ import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
 import com.laytonsmith.core.functions.Exceptions;
 import io.github.dsh105.echopet.api.EchoPetAPI;
-import io.github.dsh105.echopet.entity.Pet;
-import io.github.dsh105.echopet.entity.PetData;
+import io.github.dsh105.echopet.api.entity.PetData;
+import io.github.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -96,7 +96,7 @@ public class Functions {
                 player = Static.GetPlayer(args[0], t);
             }
 
-            return new CBoolean(EchoPetAPI.getAPI().hasPet((Player) player.getHandle()), t);
+            return CBoolean.get( EchoPetAPI.getAPI().hasPet((Player) player.getHandle()));
         }
 
         public Integer[] numArgs() {
@@ -117,9 +117,9 @@ public class Functions {
             arr.set("owner", pet.getNameOfOwner(), t);
             arr.set("name", pet.getPetName(), t);
             arr.set("type", pet.getPetType().name(), t);
-            arr.set("isownerriding", new CBoolean(pet.isOwnerRiding(), t), t);
-            arr.set("isownerwearing", new CBoolean(pet.isHat(), t), t);
-            arr.set("isrider", new CBoolean(pet.isRider(), t), t);
+            arr.set("isownerriding", CBoolean.get(pet.isOwnerRiding()), t);
+            arr.set("isownerwearing", CBoolean.get(pet.isHat()), t);
+            arr.set("isrider", CBoolean.get(pet.isRider()), t);
             
             CArray datarr = new CArray(t);
             for (PetData data : pet.getPetData()) {
@@ -179,11 +179,11 @@ public class Functions {
 
             for (Pet pet : EchoPetAPI.getAPI().getAllPets()) {
                 if (pet.getCraftPet().getEntityId() == id) {
-                    return new CBoolean(true, t);
+                    return CBoolean.TRUE;
                 }
             }
             
-            return new CBoolean(false, t);
+            return CBoolean.FALSE;
         }
 
         public Integer[] numArgs() {
