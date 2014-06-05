@@ -23,6 +23,9 @@
  */
 package com.entityreborn.chechopets;
 
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.event.PetInteractEvent;
+import com.dsh105.echopet.compat.nms.v1_7_R2.entity.CraftPet;
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.abstraction.MCLocation;
 import com.laytonsmith.abstraction.bukkit.BukkitMCLocation;
@@ -44,9 +47,6 @@ import com.laytonsmith.core.events.EventUtils;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.exceptions.EventException;
 import com.laytonsmith.core.exceptions.PrefilterNonMatchException;
-import io.github.dsh105.echopet.api.entity.pet.Pet;
-import io.github.dsh105.echopet.api.event.PetInteractEvent;
-import io.github.dsh105.echopet.nms.v1_7_R2.entity.CraftPet;
 import java.util.Map;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -90,7 +90,7 @@ public class Events implements Listener {
         
         if (e.getEntity() instanceof CraftPet) {
             CraftPet cpet = (CraftPet)e.getEntity();
-            Pet pet = cpet.getPet();
+            IPet pet = cpet.getPet();
             
             Damage event = new Damage(pet, e);
             fireEvent("pet_damaged", event);
@@ -101,7 +101,7 @@ public class Events implements Listener {
     public void onVehicleEnter(VehicleEnterEvent e) {
         if (e.getVehicle() instanceof CraftPet) {
             CraftPet cpet = (CraftPet)e.getVehicle();
-            Pet pet = cpet.getPet();
+            IPet pet = cpet.getPet();
             
             Mount event = new Mount(pet, e);
             fireEvent("pet_mounted", event);
@@ -112,7 +112,7 @@ public class Events implements Listener {
     public void onVehicleExit(VehicleExitEvent e) {
         if (e.getVehicle() instanceof CraftPet) {
             CraftPet cpet = (CraftPet)e.getVehicle();
-            Pet pet = cpet.getPet();
+            IPet pet = cpet.getPet();
             
             Unmount event = new Unmount(pet, e);
             fireEvent("pet_unmounted", event);
@@ -139,9 +139,9 @@ public class Events implements Listener {
     public static class Mount implements BindableEvent {
 
         VehicleEnterEvent event;
-        Pet pet;
+        IPet pet;
 
-        public Mount(Pet p, VehicleEnterEvent pie) {
+        public Mount(IPet p, VehicleEnterEvent pie) {
             event = pie;
             pet = p;
         }
@@ -158,9 +158,9 @@ public class Events implements Listener {
     public static class Damage implements BindableEvent {
 
         EntityDamageEvent event;
-        Pet pet;
+        IPet pet;
 
-        public Damage(Pet p, EntityDamageEvent pie) {
+        public Damage(IPet p, EntityDamageEvent pie) {
             event = pie;
             pet = p;
         }
@@ -177,9 +177,9 @@ public class Events implements Listener {
     public static class Unmount implements BindableEvent {
 
         VehicleExitEvent event;
-        Pet pet;
+        IPet pet;
 
-        public Unmount(Pet p, VehicleExitEvent pie) {
+        public Unmount(IPet p, VehicleExitEvent pie) {
             event = pie;
             pet = p;
         }
@@ -218,12 +218,12 @@ public class Events implements Listener {
             if (e instanceof Damage) {
                 Damage event = (Damage) e;
                 EntityDamageEvent damage = event.event();
-                Pet pet = event.pet;
+                IPet pet = event.pet;
 
                 map.put("owner", new CString(pet.getNameOfOwner(), Target.UNKNOWN));
                 map.put("cause", new CString(damage.getCause().name(), Target.UNKNOWN));
                 map.put("amount", new CDouble(damage.getDamage(), Target.UNKNOWN));
-                map.put("wassecondpet", CBoolean.get(pet.isRider()));
+                map.put("wassecondpet", CBoolean.GetConstruct(pet.isRider()));
 
                 if (damage instanceof EntityDamageByEntityEvent) {
                     Entity damager = ((EntityDamageByEntityEvent) damage).getDamager();
@@ -380,11 +380,10 @@ public class Events implements Listener {
         public Version since() {
             return CHVersion.V3_3_1;
         }
-        /*
-        public BindableEvent convert(CArray carray, Target target) {
+
+        public BindableEvent convert(CArray manualObject) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-        */
     }
     
     @api

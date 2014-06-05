@@ -24,6 +24,9 @@
 
 package com.entityreborn.chechopets;
 
+import com.dsh105.echopet.api.EchoPetAPI;
+import com.dsh105.echopet.compat.api.entity.IPet;
+import com.dsh105.echopet.compat.api.entity.PetData;
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.abstraction.MCLocation;
 import com.laytonsmith.abstraction.MCPlayer;
@@ -43,9 +46,6 @@ import com.laytonsmith.core.environments.Environment;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
 import com.laytonsmith.core.functions.Exceptions;
-import io.github.dsh105.echopet.api.EchoPetAPI;
-import io.github.dsh105.echopet.api.entity.PetData;
-import io.github.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -96,7 +96,7 @@ public class Functions {
                 player = Static.GetPlayer(args[0], t);
             }
 
-            return CBoolean.get( EchoPetAPI.getAPI().hasPet((Player) player.getHandle()));
+            return CBoolean.GetConstruct(EchoPetAPI.getAPI().hasPet((Player) player.getHandle()));
         }
 
         public Integer[] numArgs() {
@@ -110,16 +110,16 @@ public class Functions {
     
     @api
     public static class pet_info extends PetFunc {
-        public CArray getPetArray(Pet pet, Target t) {
+        public CArray getPetArray(IPet pet, Target t) {
             CArray arr = CArray.GetAssociativeArray(t);
             
             arr.set("id", new CInt(pet.getCraftPet().getEntityId(), t), t);
             arr.set("owner", pet.getNameOfOwner(), t);
             arr.set("name", pet.getPetName(), t);
             arr.set("type", pet.getPetType().name(), t);
-            arr.set("isownerriding", CBoolean.get(pet.isOwnerRiding()), t);
-            arr.set("isownerwearing", CBoolean.get(pet.isHat()), t);
-            arr.set("isrider", CBoolean.get(pet.isRider()), t);
+            arr.set("isownerriding", CBoolean.GetConstruct(pet.isOwnerRiding()), t);
+            arr.set("isownerwearing", CBoolean.GetConstruct(pet.isHat()), t);
+            arr.set("isrider", CBoolean.GetConstruct(pet.isRider()), t);
             
             CArray datarr = new CArray(t);
             for (PetData data : pet.getPetData()) {
@@ -143,7 +143,7 @@ public class Functions {
                 if (args[0] instanceof CInt) {
                     int id = Static.getInt32(args[0], t);
 
-                    for (Pet pet : EchoPetAPI.getAPI().getAllPets()) {
+                    for (IPet pet : EchoPetAPI.getAPI().getAllPets()) {
                         if (pet.getCraftPet().getEntityId() == id) {
                             return getPetArray(pet, t);
                         }
@@ -157,7 +157,7 @@ public class Functions {
                 }
             }
             
-            Pet pet = Util.getPet(player, t);
+            IPet pet = Util.getPet(player, t);
             
             return getPetArray(pet, t);
         }
@@ -177,7 +177,7 @@ public class Functions {
         public Construct exec2(Target t, Environment environment, Construct... args) throws ConfigRuntimeException {
             int id = Static.getInt32(args[0], t);
 
-            for (Pet pet : EchoPetAPI.getAPI().getAllPets()) {
+            for (IPet pet : EchoPetAPI.getAPI().getAllPets()) {
                 if (pet.getCraftPet().getEntityId() == id) {
                     return CBoolean.TRUE;
                 }
@@ -252,7 +252,7 @@ public class Functions {
                         args[1], player.getWorld(), t);
             }
 
-            Pet pet = Util.getPet(player, t);
+            IPet pet = Util.getPet(player, t);
             EchoPetAPI.getAPI().teleportPet(pet, (Location) location.getHandle());
 
             return CNull.NULL;
@@ -289,7 +289,7 @@ public class Functions {
                 riding = Static.getBoolean(args[1]);
             }
 
-            Pet pet = Util.getPet(player, t);
+            IPet pet = Util.getPet(player, t);
             pet.ownerRidePet(riding);
 
             return CNull.NULL;

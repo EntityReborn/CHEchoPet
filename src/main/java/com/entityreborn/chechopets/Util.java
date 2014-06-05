@@ -24,14 +24,14 @@
 
 package com.entityreborn.chechopets;
 
+import com.dsh105.echopet.api.EchoPetAPI;
+import com.dsh105.echopet.compat.api.entity.IPet;
 import com.laytonsmith.abstraction.MCPlayer;
 import com.laytonsmith.core.Static;
 import com.laytonsmith.core.constructs.Construct;
 import com.laytonsmith.core.constructs.Target;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.Exceptions;
-import io.github.dsh105.echopet.api.EchoPetAPI;
-import io.github.dsh105.echopet.api.entity.pet.Pet;
 import org.bukkit.entity.Player;
 
 /**
@@ -39,14 +39,14 @@ import org.bukkit.entity.Player;
  * @author Jason Unger <entityreborn@gmail.com>
  */
 public class Util {
-    public static Pet getPet(Construct pname, Target t) {
+    public static IPet getPet(Construct pname, Target t) {
         MCPlayer player = Static.GetPlayer(pname, t);
         
         return getPet(player, t);
     }
     
-    public static Pet getPet(MCPlayer p, Target t) {
-        Pet pet = EchoPetAPI.getAPI().getPet((Player) p.getHandle());
+    public static IPet getPet(MCPlayer p, Target t) {
+        IPet pet = EchoPetAPI.getAPI().getPet((Player) p.getHandle());
         
         if (pet == null) {
             throw new ConfigRuntimeException("That pet is not available. Either "
@@ -57,8 +57,8 @@ public class Util {
         return pet;
     }
     
-    public static Pet getPet(int id, Target t) {
-        for (Pet pet : EchoPetAPI.getAPI().getAllPets()) {
+    public static IPet getPet(int id, Target t) {
+        for (IPet pet : EchoPetAPI.getAPI().getAllPets()) {
             if (pet.getCraftPet().getEntityId() == id) {
                 return pet;
             }
