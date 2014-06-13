@@ -62,7 +62,7 @@ public class LifeCycle extends AbstractExtension {
     }
 
     public Version getVersion() {
-        return new SimpleVersion(0, 0, 1);
+        return new SimpleVersion(0, 0, 3);
     }
 
     public static boolean EPLoaded() {

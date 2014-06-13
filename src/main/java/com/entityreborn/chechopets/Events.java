@@ -23,9 +23,9 @@
  */
 package com.entityreborn.chechopets;
 
+import com.dsh105.echopet.compat.api.entity.IEntityPet;
 import com.dsh105.echopet.compat.api.entity.IPet;
 import com.dsh105.echopet.compat.api.event.PetInteractEvent;
-import com.dsh105.echopet.compat.nms.v1_7_R3.entity.EntityPet;
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.abstraction.MCLocation;
 import com.laytonsmith.abstraction.bukkit.BukkitMCLocation;
@@ -88,8 +88,8 @@ public class Events implements Listener {
     public void onPetDamaged2(EntityDamageEvent e) {
         e.setCancelled(wasCancelled);
         
-        if (e.getEntity() instanceof EntityPet) {
-            EntityPet cpet = (EntityPet)e.getEntity();
+        if (e.getEntity() instanceof IEntityPet) {
+            IEntityPet cpet = (IEntityPet)e.getEntity();
             IPet pet = cpet.getPet();
             
             Damage event = new Damage(pet, e);
@@ -99,8 +99,8 @@ public class Events implements Listener {
     
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onVehicleEnter(VehicleEnterEvent e) {
-        if (e.getVehicle() instanceof EntityPet) {
-            EntityPet cpet = (EntityPet)e.getVehicle();
+        if (e.getVehicle() instanceof IEntityPet) {
+            IEntityPet cpet = (IEntityPet)e.getVehicle();
             IPet pet = cpet.getPet();
             
             Mount event = new Mount(pet, e);
@@ -110,8 +110,8 @@ public class Events implements Listener {
     
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onVehicleExit(VehicleExitEvent e) {
-        if (e.getVehicle() instanceof EntityPet) {
-            EntityPet cpet = (EntityPet)e.getVehicle();
+        if (e.getVehicle() instanceof IEntityPet) {
+            IEntityPet cpet = (IEntityPet)e.getVehicle();
             IPet pet = cpet.getPet();
             
             Unmount event = new Unmount(pet, e);
